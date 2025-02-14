@@ -43,7 +43,7 @@ class CmsController extends Controller
     $donation->save();
 
     // Redirect atau memberi feedback
-    return redirect()->route('home')->with('success', 'Donasi berhasil dengan bukti transfer!');
+    return redirect()->route('home');
 }
 
 public function coba(){
