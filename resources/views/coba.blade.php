@@ -11,7 +11,7 @@
     <nav class="bg-white shadow">
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold text-gray-800">MOTHER ACADEMIE</div>
+                <div class="text-2xl font-bold text-gray-800">MOTHER ACADEMIE adadaad</div>
                 <div class="hidden md:flex space-x-4">
                     <a href="#" class="text-gray-800 hover:text-gray-600">Home</a>
                     <a href="#" class="text-gray-800 hover:text-gray-600">Coffee Courses</a>
