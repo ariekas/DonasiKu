@@ -24,8 +24,7 @@ class DonationTransactionResource extends Resource
     {
         return [
             'index' => Pages\ListDonationTransactions::route('/'),
-            // Menghilangkan halaman create
-            // 'create' => Pages\CreateDonationTransaction::route('/create'),
+           
         ];
     }
 
