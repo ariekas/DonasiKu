@@ -9,12 +9,6 @@ use App\Models\donations;
 
 class CmsController extends Controller
 {
-    public function index()
-    {
-        $donations = donations::all(); // Ambil semua donasi
-        return view('welcome', compact('donations'));
-        
-    }
 
     public function storeDonation(Request $request)
 {
@@ -43,12 +37,15 @@ class CmsController extends Controller
     $donation->save();
 
     // Redirect atau memberi feedback
-    return redirect()->route('home');
+    return redirect()->route('coba');
 }
 
 public function coba(){
-    return view('coba');
+    $donations = donations::all(); // Ambil semua donasi
+    return view('coba', compact('donations'));
 }
+
+
 
 
 }

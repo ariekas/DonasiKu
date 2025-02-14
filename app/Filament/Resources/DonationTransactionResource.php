@@ -57,10 +57,6 @@ class DonationTransactionResource extends Resource
                 ->disk('public')
                 ->url(fn ($record) => asset('storage/' . $record->image)) // Membuat gambar clickable
                 ->openUrlInNewTab(), // Membuka gambar di tab baru
-            
-            
-                
-
                 BadgeColumn::make('status')
                 ->formatStateUsing(fn (string $state): string => match ($state) {
                     'pending' => 'Pending',
@@ -103,6 +99,9 @@ class DonationTransactionResource extends Resource
                         }
                     })
                     ->label('Confirm Selected'),
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                    ]),
             ]);
     }
 }

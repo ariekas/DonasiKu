@@ -15,8 +15,8 @@ use App\Http\Controllers\DonasiController;
 |
 */
 
-Route::get('/', [CmsController::class, 'index'])->name('home');
-Route::get('/coba', [CmsController::class,'coba'])->name('coba');
+Route::get('/', [CmsController::class,'coba'])->name('coba');
+
 
 Route::post('/donation/store', [CmsController::class, 'storeDonation'])->name('donation.store');
 
