@@ -16,7 +16,7 @@
         style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
         <div class="layout-container flex h-full grow flex-col">
             <header
-                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#F4F4F4] px-10 py-3">
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#F4F4F4] px-10 py-3 shadow-md">
                 <div class="flex items-center gap-4 text-[#141414]">
                     <div class="size-8">
                         <img src="{{ asset('image/logo.png') }}" alt="">
@@ -29,11 +29,18 @@
                         <a class="text-[#141414] text-lg font-medium leading-normal"
                             href="{{ route('donasi.transaksi') }}">Data Donasi</a>
                     </div>
-                    <button
-                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#39E079] text-[#141414] text-lg font-bold leading-normal tracking-[0.015em]"
-                        onclick="showAdminModal()">
-                        <span class="truncate">Masuk</span>
-                    </button>
+                    @auth
+                        <button
+                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#39E079] text-white text-lg font-bold leading-normal tracking-[0.015em]">
+                            <span class="truncate">Sudah Login</span>
+                        </button>
+                    @else
+                        <button
+                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#39E079] text-[#141414] text-lg font-bold leading-normal tracking-[0.015em]"
+                            onclick="showAdminModal()">
+                            <span class="truncate">Masuk</span>
+                        </button>
+                    @endauth
                 </div>
             </header>
             <div class="px-40 flex flex-1 justify-center py-5">
@@ -142,80 +149,87 @@
                         <div class="flex items-stretch p-4 gap-4">
                             <!-- Card 1 -->
                             @foreach($donations as $donation)
-                               
 
-                                <div
-                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-[250px] bg-white shadow-lg p-4">
-                                    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                        style='background-image: url("{{ asset('storage/' . $donation->image) }}");'>
-                                    </div>
-                                    <div>
-                                        <p class="text-[#141414] text-base font-medium leading-normal">
-                                            {{ $donation->judul }}
-                                        </p>
-                                        <p class="text-neutral-500 text-sm font-normal leading-normal max-w-sm">
-                                            {{ Str::limit($donation->deskripsi, 100) }}
-                                        </p>
-                                    </div>
 
-                                    @php
-                                    $percentage = min(100, ($donation->jumlah_terkumpul / $donation->target_donasi) * 100);
-                                @endphp
-                                    <div class="mt-2">
-                                        <div class="w-full bg-gray-300 rounded-full h-2.5">
-                                            <div class="h-2.5 rounded-full"
-                                                style="width: {{ $percentage }}%; background-color: #39E079;">
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-between text-sm mt-2">
-                                          
-                                            <span>Terkumpul: Rp
-                                                {{ number_format($donation->jumlah_terkumpul, 2, ',', '.') }}</span>
-                                            <span>Target:
-                                                Rp{{ number_format($donation->target_donasi, 2, ',', '.') }}</span>
-                                        </div>
-                                    </div>
+                                                        <div
+                                                            class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-[250px] bg-white shadow-lg p-4">
+                                                            <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                                                                style='background-image: url("{{ asset('storage/' . $donation->image) }}");'>
+                                                            </div>
+                                                            <div>
+                                                                <p class="text-[#141414] text-base font-medium leading-normal">
+                                                                    {{ $donation->judul }}
+                                                                </p>
+                                                                <p class="text-neutral-500 text-sm font-normal leading-normal max-w-sm">
+                                                                    {{ Str::limit($donation->deskripsi, 100) }}
+                                                                </p>
+                                                            </div>
 
-                                    <div class="grid grid-cols-3 gap-2 mt-5">
-                                        <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
-                                            style="background-color: #39E079;"
-                                            onclick="openModal({{ $donation->id }})">Donasi</button>
-                                        <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
-                                            style="background-color: #39E079;">Detail</button>
-                                        <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
-                                            style="background-color: #39E079;">Dokumentasi</button>
-                                    </div>
-                                </div>
+                                                            @php
+                                                                $percentage = min(100, ($donation->jumlah_terkumpul / $donation->target_donasi) * 100);
+                                                            @endphp
+                                                            <div class="mt-2">
+                                                                <div class="w-full bg-gray-300 rounded-full h-2.5">
+                                                                    <div class="h-2.5 rounded-full"
+                                                                        style="width: {{ $percentage }}%; background-color: #39E079;">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex justify-between text-sm mt-2">
+
+                                                                    <span>Terkumpul: Rp
+                                                                        {{ number_format($donation->jumlah_terkumpul, 2, ',', '.') }}</span>
+                                                                    <span>Target:
+                                                                        Rp{{ number_format($donation->target_donasi, 2, ',', '.') }}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-3 gap-2 mt-5">
+                                                                <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
+                                                                    style="background-color: #39E079;"
+                                                                    onclick="openModal({{ $donation->id }})">Donasi</button>
+                                                                <a href="{{ route('detail_donasi', $donation->id) }}"
+                                                                    class="text-black rounded-lg py-2 px-4 hover:opacity-90 text-center"
+                                                                    style="background-color: #39E079;">Detail</a>
+                                                                <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
+                                                                    style="background-color: #39E079;">Dokumentasi</button>
+                                                            </div>
+                                                        </div>
                             @endforeach
                             <div id="donationModal" style="display: none;"
-                                class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                                <div class="bg-white p-8 rounded-lg shadow-lg">
-                                    <h3 class="text-2xl font-semibold mb-4">Donasi untuk Proyek</h3>
+                                class="fixed inset-0 z-50 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-black opacity-50" onclick="closeModal()"></div>
+                                <div
+                                    class="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg transform transition-all duration-300 ease-in-out scale-95">
+                                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Donasi untuk Proyek
+                                    </h3>
                                     <form action="{{ route('donation.store') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="donation_id" id="donation_id">
                                         <div class="mb-4">
-                                            <label for="nama" class="block text-lg">Nama:</label>
+                                            <label for="nama"
+                                                class="block text-lg font-medium text-gray-700">Nama:</label>
                                             <input type="text" name="nama" required
-                                                class="w-full p-3 border border-gray-300 rounded-lg mt-2">
+                                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#39E079]">
                                         </div>
                                         <div class="mb-4">
-                                            <label for="jumlah_donasi" class="block text-lg">Jumlah Donasi:</label>
+                                            <label for="jumlah_donasi"
+                                                class="block text-lg font-medium text-gray-700">Jumlah Donasi:</label>
                                             <input type="number" name="jumlah_donasi" required
-                                                class="w-full p-3 border border-gray-300 rounded-lg mt-2">
+                                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#39E079]">
                                         </div>
                                         <div class="mb-4">
-                                            <label for="image" class="block text-lg">Bukti Transfer:</label>
+                                            <label for="image" class="block text-lg font-medium text-gray-700">Bukti
+                                                Transfer:</label>
                                             <input type="file" name="image" accept="image/*" required
-                                                class="w-full p-3 border border-gray-300 rounded-lg mt-2">
+                                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#39E079]">
                                         </div>
-                                        <div class="flex justify-between">
+                                        <div class="flex justify-between gap-4">
                                             <button type="submit"
-                                                class="px-6 py-2 bg-blue-600 text-white rounded-full">Kirim
+                                                class="w-full py-2 bg-[#39E079] text-white rounded-lg hover:bg-[#2ecc71] transition ease-in-out duration-300">Kirim
                                                 Donasi</button>
                                             <button type="button" onclick="closeModal()"
-                                                class="px-6 py-2 bg-gray-400 text-white rounded-full">Tutup</button>
+                                                class="w-full py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition ease-in-out duration-300">Tutup</button>
                                         </div>
                                     </form>
                                 </div>
@@ -292,32 +306,35 @@
                         <!-- Kolom 4: Sosial Media -->
                         <div class="flex flex-col gap-6 text-start  items-center">
                             <h3 class="text-xl font-bold">Sosial Media</h3>
-                            <div class="flex gap-4">
-                                <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                        viewBox="0 0 256 256">
-                                        <path
-                                            d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                        viewBox="0 0 256 256">
-                                        <path
-                                            d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                        viewBox="0 0 256 256">
-                                        <path
-                                            d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
-                                        </path>
-                                    </svg>
-                                </a>
-                            </div>
+                            <div class="flex gap-5">
+                    <!-- Facebook -->
+                    <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            viewBox="0 0 320 512">
+                            <path
+                                d="M279.14 288l14.22-92.66h-88.91V140.79c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S261.91 0 225.36 0C149.09 0 100.17 48.81 100.17 137.3v58.04H12v92.66h88.17V512h107.41V288z" />
+                        </svg>
+                    </a>
+
+                    <!-- Twitter -->
+                    <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            viewBox="0 0 512 512">
+                            <path
+                                d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.797-84.143-52.308-84.143-103.623v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.032-46.781-87.391 0-19.492 5.197-37.36 14.294-52.914 51.787 63.675 129.622 105.258 217.365 109.807-1.624-7.796-2.599-15.917-2.599-24.038 0-57.785 46.782-104.568 104.568-104.568 30.214 0 57.452 12.67 76.67 33.137 23.715-4.548 46.132-13.319 66.299-25.34-7.797 24.366-24.366 44.833-46.132 57.786 21.116-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                        </svg>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            viewBox="0 0 256 256">
+                            <path
+                                d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
                         </div>
                     </div>
 
@@ -334,17 +351,25 @@
     </div>
     <script>
         function showAdminModal() {
-            if (confirm('Apakah kamu admin?')) {
                 window.location.href = '/admin/login';
-            }
         }
         function openModal(donationId) {
             document.getElementById('donation_id').value = donationId;
             document.getElementById('donationModal').style.display = 'flex';
+            const modal = document.getElementById('donationModal');
+            modal.style.display = 'flex';
+            modal.classList.remove('scale-95');
+            modal.classList.add('scale-100');
         }
 
         function closeModal() {
             document.getElementById('donationModal').style.display = 'none';
+            const modal = document.getElementById('donationModal');
+            modal.classList.remove('scale-100');
+            modal.classList.add('scale-95');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
         }
     </script>
 </body>

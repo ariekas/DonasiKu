@@ -22,3 +22,4 @@ Route::post('/donation/store', [CmsController::class, 'storeDonation'])->name('d
 
 
 Route::get('/donasi/transaksi', [DonasiController::class, 'index'])->name('donasi.transaksi');
+Route::get('/detail_donasi/{id}', [DonasiController::class,'detailDonasi'])->name('detail_donasi');
