@@ -4,23 +4,20 @@
     <div class="layout-container flex flex-col flex-grow">
         <!-- Header dan konten lainnya -->
         <header
-            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#F4F4F4] px-10 py-3 shadow-md">
-            <a href="/">
-            <div class="flex items-center gap-4 text-[#141414]">
-                <div class="size-8">
-                    <img src="{{ asset('image/logo.png') }}" alt="">
-                </div>
-                <h2 class="text-[#39E079] text-xl font-bold leading-tight tracking-[-0.015em]">DonasiKu</h2>
-            </div>
-            </a>
-            
-            <div class="flex flex-1 justify-end gap-8">
-                <div class="flex items-center gap-9">
-                    <a class="text-[#141414] text-lg font-medium leading-normal" href="#">Cara Kerja</a>
-                    <a class="text-[#141414] text-lg font-medium leading-normal"
-                        href="{{ route('donasi.transaksi') }}">Data Donasi</a>
-                </div>
-                @auth
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#F4F4F4] px-10 py-3 shadow-md">
+                    <a href="/" class="flex items-center gap-4">
+                    <div class="size-8">
+                        <img src="{{ asset('image/logo.png') }}" alt="">
+                    </div>
+                    <h2 class="text-[#39E079] text-xl font-bold leading-tight tracking-[-0.015em]">DonasiKu</h2>
+                    </a>
+                <div class="flex flex-1 justify-end gap-8">
+                    <div class="flex items-center gap-9">
+                        <a class="text-[#141414] text-lg font-medium leading-normal" href="{{ route('about-us') }}">Tentang kami</a>
+                        <a class="text-[#141414] text-lg font-medium leading-normal"
+                            href="{{ route('donasi.transaksi') }}">Data Donasi</a>
+                    </div>
+                    @auth
                         <button
                             class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#39E079] text-white text-lg font-bold leading-normal tracking-[0.015em]">
                             <span class="truncate">Sudah Login</span>
@@ -32,8 +29,8 @@
                             <span class="truncate">Masuk</span>
                         </button>
                     @endauth
-            </div>
-        </header>
+                </div>
+            </header>
         <div class="container mx-auto px-4 py-8">
             <h2 class="text-3xl font-bold mb-6 text-gray-800">Data Transaksi Donasi</h2>
             <div class="bg-white shadow-md rounded-lg overflow-hidden">

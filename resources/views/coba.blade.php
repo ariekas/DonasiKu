@@ -17,15 +17,16 @@
         <div class="layout-container flex h-full grow flex-col">
             <header
                 class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#F4F4F4] px-10 py-3 shadow-md">
-                <div class="flex items-center gap-4 text-[#141414]">
+                <a href="/" class="flex items-center gap-4">
                     <div class="size-8">
                         <img src="{{ asset('image/logo.png') }}" alt="">
                     </div>
                     <h2 class="text-[#39E079] text-xl font-bold leading-tight tracking-[-0.015em]">DonasiKu</h2>
-                </div>
+                </a>
                 <div class="flex flex-1 justify-end gap-8">
                     <div class="flex items-center gap-9">
-                        <a class="text-[#141414] text-lg font-medium leading-normal" href="#">Cara Kerja</a>
+                        <a class="text-[#141414] text-lg font-medium leading-normal"
+                            href="{{ route('about-us') }}">Tentang kami</a>
                         <a class="text-[#141414] text-lg font-medium leading-normal"
                             href="{{ route('donasi.transaksi') }}">Data Donasi</a>
                     </div>
@@ -62,25 +63,30 @@
                                 </div>
                                 <label class="flex flex-col min-w-40 h-14 w-full max-w-[480px] @[480px]:h-16">
                                     <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-                                        <div class="text-neutral-500 flex border border-[#E0E0E0] bg-[#FFFFFF] items-center justify-center pl-[15px] rounded-l-xl border-r-0"
-                                            data-icon="MagnifyingGlass" data-size="20px" data-weight="regular">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
-                                                fill="currentColor" viewBox="0 0 256 256">
-                                                <path
-                                                    d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <input placeholder="Cari Donasi Yang Kamu Cari"
-                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#141414] focus:outline-0 focus:ring-0 border border-[#E0E0E0] bg-[#FFFFFF] focus:border-[#E0E0E0] h-full placeholder:text-neutral-500 px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
-                                            value="" />
-                                        <div
-                                            class="flex items-center justify-center rounded-r-xl border-l-0 border border-[#E0E0E0] bg-[#FFFFFF] pr-[7px]">
+                                        <form action="{{ route('coba') }}" method="GET" class="flex w-full">
+                                            <div
+                                                class="flex flex-grow border border-[#E0E0E0] bg-[#FFFFFF] items-center rounded-l-xl focus-within:border-[#39E079] focus-within:shadow-md transition">
+                                                <div
+                                                    class="text-neutral-500 flex items-center justify-center pl-[15px]">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
+                                                        fill="currentColor" viewBox="0 0 256 256">
+                                                        <path
+                                                            d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                                <input type="text" name="search"
+                                                    placeholder="Cari Donasi Yang Kamu Cari"
+                                                    class="w-full flex-1 text-[#141414] bg-[#FFFFFF] h-full px-[15px] text-sm font-normal leading-normal border-none focus:outline-none focus:ring-0 focus:border-transparent placeholder:text-neutral-500 transition"
+                                                    value="{{ request('search') }}" />
+                                            </div>
                                             <button
-                                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#39E079] text-[#141414] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
+                                                class="flex items-center justify-center min-w-[84px] h-10 px-4 bg-[#39E079] text-[#141414] text-sm font-bold rounded-r-xl @[480px]:h-12 @[480px]:px-5 @[480px]:text-base transition hover:bg-[#32c86a]">
                                                 <span class="truncate">Cari</span>
                                             </button>
-                                        </div>
+                                        </form>
+
+
                                     </div>
                                 </label>
                             </div>
@@ -148,53 +154,57 @@
                         class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         <div class="flex items-stretch p-4 gap-4">
                             <!-- Card 1 -->
-                            @foreach($donations as $donation)
 
+                            @if ($donations->isEmpty())
+                                <p class="text-center text-gray-500 mt-4 ">Data yang kamu cari tidak ada.</p>
+                            @else
+                                                    @foreach($donations as $donation)
+                                                                            <div
+                                                                                class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-[250px] bg-white shadow-lg p-4">
+                                                                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                                                                                    style='background-image: url("{{ asset('storage/' . $donation->image) }}");'>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <p class="text-[#141414] text-base font-medium leading-normal">
+                                                                                        {{ $donation->judul }}
+                                                                                    </p>
+                                                                                    <p class="text-neutral-500 text-sm font-normal leading-normal max-w-sm">
+                                                                                        {{ Str::limit($donation->deskripsi, 100) }}
+                                                                                    </p>
+                                                                                </div>
 
-                                                        <div
-                                                            class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-[250px] bg-white shadow-lg p-4">
-                                                            <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                                                style='background-image: url("{{ asset('storage/' . $donation->image) }}");'>
-                                                            </div>
-                                                            <div>
-                                                                <p class="text-[#141414] text-base font-medium leading-normal">
-                                                                    {{ $donation->judul }}
-                                                                </p>
-                                                                <p class="text-neutral-500 text-sm font-normal leading-normal max-w-sm">
-                                                                    {{ Str::limit($donation->deskripsi, 100) }}
-                                                                </p>
-                                                            </div>
+                                                                                @php
+                                                                                    $percentage = min(100, ($donation->jumlah_terkumpul / $donation->target_donasi) * 100);
+                                                                                @endphp
+                                                                                <div class="mt-2">
+                                                                                    <div class="w-full bg-gray-300 rounded-full h-2.5">
+                                                                                        <div class="h-2.5 rounded-full"
+                                                                                            style="width: {{ $percentage }}%; background-color: #39E079;">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex justify-between text-sm mt-2">
+                                                                                        <span>Terkumpul: Rp
+                                                                                            {{ number_format($donation->jumlah_terkumpul, 2, ',', '.') }}</span>
+                                                                                        <span>Target:
+                                                                                            Rp{{ number_format($donation->target_donasi, 2, ',', '.') }}</span>
+                                                                                    </div>
+                                                                                </div>
 
-                                                            @php
-                                                                $percentage = min(100, ($donation->jumlah_terkumpul / $donation->target_donasi) * 100);
-                                                            @endphp
-                                                            <div class="mt-2">
-                                                                <div class="w-full bg-gray-300 rounded-full h-2.5">
-                                                                    <div class="h-2.5 rounded-full"
-                                                                        style="width: {{ $percentage }}%; background-color: #39E079;">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="flex justify-between text-sm mt-2">
+                                                                                <div class="grid grid-cols-3 gap-2 mt-5">
+                                                                                    <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
+                                                                                        style="background-color: #39E079;"
+                                                                                        onclick="openModal({{ $donation->id }})">Donasi</button>
+                                                                                    <a href="{{ route('detail_donasi', $donation->id) }}"
+                                                                                        class="text-black rounded-lg py-2 px-4 hover:opacity-90 text-center"
+                                                                                        style="background-color: #39E079;">Detail</a>
+                                                                                    <a href="{{ route('documentasi_donasi', $donation->id) }}"
+                                                                                        class="text-black rounded-lg py-2 px-4 hover:opacity-90 text-center"
+                                                                                        style="background-color: #39E079;">Dokumentasi</a>
+                                                                                </div>
+                                                                            </div>
+                                                    @endforeach
+                            @endif
 
-                                                                    <span>Terkumpul: Rp
-                                                                        {{ number_format($donation->jumlah_terkumpul, 2, ',', '.') }}</span>
-                                                                    <span>Target:
-                                                                        Rp{{ number_format($donation->target_donasi, 2, ',', '.') }}</span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="grid grid-cols-3 gap-2 mt-5">
-                                                                <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
-                                                                    style="background-color: #39E079;"
-                                                                    onclick="openModal({{ $donation->id }})">Donasi</button>
-                                                                <a href="{{ route('detail_donasi', $donation->id) }}"
-                                                                    class="text-black rounded-lg py-2 px-4 hover:opacity-90 text-center"
-                                                                    style="background-color: #39E079;">Detail</a>
-                                                                <button class="text-black rounded-lg py-2 px-4 hover:opacity-90"
-                                                                    style="background-color: #39E079;">Dokumentasi</button>
-                                                            </div>
-                                                        </div>
-                            @endforeach
                             <div id="donationModal" style="display: none;"
                                 class="fixed inset-0 z-50 flex items-center justify-center">
                                 <div class="absolute inset-0 bg-black opacity-50" onclick="closeModal()"></div>
@@ -307,34 +317,34 @@
                         <div class="flex flex-col gap-6 text-start  items-center">
                             <h3 class="text-xl font-bold">Sosial Media</h3>
                             <div class="flex gap-5">
-                    <!-- Facebook -->
-                    <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                            viewBox="0 0 320 512">
-                            <path
-                                d="M279.14 288l14.22-92.66h-88.91V140.79c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S261.91 0 225.36 0C149.09 0 100.17 48.81 100.17 137.3v58.04H12v92.66h88.17V512h107.41V288z" />
-                        </svg>
-                    </a>
+                                <!-- Facebook -->
+                                <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        viewBox="0 0 320 512">
+                                        <path
+                                            d="M279.14 288l14.22-92.66h-88.91V140.79c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S261.91 0 225.36 0C149.09 0 100.17 48.81 100.17 137.3v58.04H12v92.66h88.17V512h107.41V288z" />
+                                    </svg>
+                                </a>
 
-                    <!-- Twitter -->
-                    <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                            viewBox="0 0 512 512">
-                            <path
-                                d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.797-84.143-52.308-84.143-103.623v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.032-46.781-87.391 0-19.492 5.197-37.36 14.294-52.914 51.787 63.675 129.622 105.258 217.365 109.807-1.624-7.796-2.599-15.917-2.599-24.038 0-57.785 46.782-104.568 104.568-104.568 30.214 0 57.452 12.67 76.67 33.137 23.715-4.548 46.132-13.319 66.299-25.34-7.797 24.366-24.366 44.833-46.132 57.786 21.116-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
-                        </svg>
-                    </a>
+                                <!-- Twitter -->
+                                <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.797-84.143-52.308-84.143-103.623v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.032-46.781-87.391 0-19.492 5.197-37.36 14.294-52.914 51.787 63.675 129.622 105.258 217.365 109.807-1.624-7.796-2.599-15.917-2.599-24.038 0-57.785 46.782-104.568 104.568-104.568 30.214 0 57.452 12.67 76.67 33.137 23.715-4.548 46.132-13.319 66.299-25.34-7.797 24.366-24.366 44.833-46.132 57.786 21.116-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                                    </svg>
+                                </a>
 
-                    <!-- Instagram -->
-                    <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                            viewBox="0 0 256 256">
-                            <path
-                                d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
-                            </path>
-                        </svg>
-                    </a>
-                </div>
+                                <!-- Instagram -->
+                                <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        viewBox="0 0 256 256">
+                                        <path
+                                            d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -351,7 +361,7 @@
     </div>
     <script>
         function showAdminModal() {
-                window.location.href = '/admin/login';
+            window.location.href = '/admin/login';
         }
         function openModal(donationId) {
             document.getElementById('donation_id').value = donationId;

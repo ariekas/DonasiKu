@@ -26,33 +26,31 @@
                     @endauth
                 </div>
             </header>
+<div class="mx-20 px-6 py-12">
+        <div class=" mx-auto  p-8">
+            <h1 class="text-4xl font-bold text-[#39E079] text-center mb-4">Tentang Kami</h1>
+            <p class="text-gray-700 text-center mb-6">
+                Kami adalah platform donasi yang bertujuan untuk membantu mereka yang membutuhkan dengan transparansi dan kepercayaan.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8  mt-10 border items-center">
+                <div>
+                    <img src="{{ asset('image/donasi.png') }}" alt="Donasi" class="rounded-lg shadow-md">
+                </div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-[#39E079] mb-3">Misi Kami</h2>
+                    <p class="text-gray-600 mb-4">
+                        Meningkatkan kesadaran sosial dan memberikan dampak positif bagi masyarakat yang kurang beruntung melalui donasi yang terpercaya.
+                    </p>
+                    <h2 class="text-2xl font-semibold text-[#39E079] mb-3">Visi Kami</h2>
+                    <p class="text-gray-600">
+                        Menjadi platform donasi yang transparan, aman, dan berdaya guna untuk membantu sesama dengan mudah.
+                    </p>
+                </div>
+            </div>
 
-@foreach($donations as $donation)
-<div class="max-w-full mx-10  p-6 bg-white flex gap-6 my-5">
-    <!-- Image -->
-    <img src="{{ asset('storage/' . $donation->image) }}" alt="{{ $donation->judul }}" class="w-1/3  h-auto object-cover rounded-lg">
-    
-    <!-- Deskripsi -->
-    <div class="w-2/3">
-        <h2 class="text-2xl font-bold text-gray-800">{{ $donation->judul }}</h2>
-        <p class="text-lg text-gray-600 mt-2"> {{ $donation->deskripsi }}</p>
-        
-        <!-- Info Bank -->
-        <div class="mt-4 p-4 bg-gray-100 rounded-lg">
-            <p class="text-gray-700 font-semibold">Bank : {{ $donation->nama_bank }}</p>
-            <p class="text-gray-700 font-semibold">No. Rekening: {{ $donation->nomer_bank }}</p>
-        </div>
-        
-        <!-- Target Donasi -->
-        <div class="mt-4">
-            <p class="text-gray-700 font-semibold">Target Donasi: Rp {{ $donation->target_donasi }}</p>
-            <p class="text-gray-700 font-semibold">Jumlah Terkumpul: Rp {{ $donation->jumlah_terkumpul }}</p>
+           
         </div>
     </div>
-</div>
-@endforeach
-
-</div>
 <footer class="bg-[#39E079] text-[#141414] py-12 mt-10 w-full ">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -64,8 +62,6 @@
                     dan transparan. Kami berkomitmen untuk membantu mereka yang membutuhkan.
                 </p>
             </div>
-
-            <!-- Kolom 2: Link Cepat -->
             <div class="flex flex-col gap-6 text-start items-center">
                 <h3 class="text-2xl font-bold">Link Cepat</h3>
                 <ul class="flex flex-col gap-3">
@@ -80,8 +76,6 @@
                             & Ketentuan</a></li>
                 </ul>
             </div>
-
-            <!-- Kolom 3: Kontak Kami -->
             <div class="flex flex-col gap-6 text-start items-center">
                 <h3 class="text-2xl font-bold">Kontak Kami</h3>
                 <ul class="flex flex-col gap-5">
@@ -114,12 +108,9 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- Kolom 4: Sosial Media -->
             <div class="flex flex-col gap-6 text-start items-center">
                 <h3 class="text-xl font-bold">Sosial Media</h3>
                 <div class="flex gap-5">
-                    <!-- Facebook -->
                     <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             viewBox="0 0 320 512">
@@ -127,8 +118,6 @@
                                 d="M279.14 288l14.22-92.66h-88.91V140.79c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S261.91 0 225.36 0C149.09 0 100.17 48.81 100.17 137.3v58.04H12v92.66h88.17V512h107.41V288z" />
                         </svg>
                     </a>
-
-                    <!-- Twitter -->
                     <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             viewBox="0 0 512 512">
@@ -136,8 +125,6 @@
                                 d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.797-84.143-52.308-84.143-103.623v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.032-46.781-87.391 0-19.492 5.197-37.36 14.294-52.914 51.787 63.675 129.622 105.258 217.365 109.807-1.624-7.796-2.599-15.917-2.599-24.038 0-57.785 46.782-104.568 104.568-104.568 30.214 0 57.452 12.67 76.67 33.137 23.715-4.548 46.132-13.319 66.299-25.34-7.797 24.366-24.366 44.833-46.132 57.786 21.116-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
                         </svg>
                     </a>
-
-                    <!-- Instagram -->
                     <a href="#" class="text-[#141414] hover:text-[#FFFFFF] transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                             viewBox="0 0 256 256">
@@ -147,14 +134,9 @@
                         </svg>
                     </a>
                 </div>
-
             </div>
         </div>
-
-        <!-- Divider -->
         <div class="border-t border-[#FFFFFF] my-8"></div>
-
-        <!-- Hak Cipta -->
         <div class="text-center text-lg">
             <p>&copy; 2023 DonasiKu. All rights reserved.</p>
         </div>

@@ -27,5 +27,10 @@ class donations extends Model
         return $this->hasMany(donations_transaksi::class);
     }
 
+    public function documentations()
+{
+    return $this->hasMany(DocumentationDonation::class);
+}
+
    
 }

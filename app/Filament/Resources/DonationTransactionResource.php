@@ -18,6 +18,7 @@ class DonationTransactionResource extends Resource
 {
     protected static ?string $model = donations_transaksi::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Data Donation Transactions';
 
     // Menonaktifkan fitur Create dan hanya membolehkan Edit
     public static function getPages(): array

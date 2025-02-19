@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\donations_transaksi;
 use Illuminate\Http\Request;
 use App\Models\donations;
-
+use App\Models\DocumentationDonation;
 
 class CmsController extends Controller
 {
@@ -40,12 +40,26 @@ class CmsController extends Controller
     return redirect()->route('coba');
 }
 
-public function coba(){
-    $donations = donations::all(); // Ambil semua donasi
+public function coba(Request $request){
+    // $donations = donations::all(); // Ambil semua donasi
+    $query = donations::query();
+
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where('judul', 'LIKE', "%{$search}%");
+    }
+
+    $donations = $query->get();
     return view('coba', compact('donations'));
 }
 
-
+public function DokumentasiDonasi($id) {
+    $dataDocumentasi = DocumentationDonation::whereHas('donation', function ($query) use ($id) {
+        $query->where('id', $id);
+    })->get();
+    // return response()->json($dataDocumentasi);  
+    return view('documentasi_donasi', compact('dataDocumentasi'));
+}
 
 
 
