@@ -50,6 +50,7 @@ public function coba(Request $request){
     }
 
     $donations = $query->get();
+    // return response()->json($donations);
     return view('coba', compact('donations'));
 }
 

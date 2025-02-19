@@ -85,8 +85,6 @@
                                                 <span class="truncate">Cari</span>
                                             </button>
                                         </form>
-
-
                                     </div>
                                 </label>
                             </div>
@@ -165,14 +163,18 @@
                                                                                     style='background-image: url("{{ asset('storage/' . $donation->image) }}");'>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <p class="text-[#141414] text-base font-medium leading-normal">
+                                                                                    <p class="text-[#141414] text-xl font-medium leading-normal">
                                                                                         {{ $donation->judul }}
                                                                                     </p>
                                                                                     <p class="text-neutral-500 text-sm font-normal leading-normal max-w-sm">
                                                                                         {{ Str::limit($donation->deskripsi, 100) }}
                                                                                     </p>
-                                                                                </div>
+                                                                                    <div class="flex items-center justify-between mt-2">
+                                                                                        <p>Nama Bank: {{ $donation->nama_bank }}</p>
+                                                                                        <p>No. Rekening: {{ $donation->nomer_bank }}</p>
 
+                                                                                    </div>
+                                                                                </div>
                                                                                 @php
                                                                                     $percentage = min(100, ($donation->jumlah_terkumpul / $donation->target_donasi) * 100);
                                                                                 @endphp
